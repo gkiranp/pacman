@@ -33,25 +33,45 @@ Components inside the _Map_ can be either _Moving_ (Pacman and Ghosts) or _Non-M
 So basic _Map_ of 20x20 array may look like this:
 `char map[20][20] = {`
 `{........====........},`
+
 `{....=...............},`
+
 `{=...=...=====.......},`
+
 `{=...=...........=...},`
+
 `{=...............=...},`
+
 `{=......####.....=...},`
+
 `{................=...},`
+
 `{.....========.......},`
+
 `{.....=..............},`
+
 `{.....=..............},`
+
 `{..............====..},`
+
 `{..............=.....},`
+
 `{....====....==......},`
+
 `{....=...............},`
+
 `{....=....@.....=....},`
+
 `{....=..........=....},`
+
 `{...............=....},`
+
 `{........===.........},`
+
 `{.......=====........},`
+
 `{.....=========......}`
+
 `};`
 
 For better understanding purpose, I have drawn an image representation of above Map:
@@ -67,14 +87,15 @@ Below is the class diagram and their relationsship:
 
 **Operation Concurrancy**
 To achieve concurrancy in my design, I will be using 4 C++ threads:
+
 **_Thread1_**:
 `main()` thread itself. 
 Operations will involve:
-> Creating components and initializing their values
-> Drawing the Map during initialization
-> Resetting the Component's position inside Map
-> Invoking other 3 child threads
-> And help to `join()` back child threads
+- Creating components and initializing their values
+- Drawing the Map during initialization
+- Resetting the Component's position inside Map
+- Invoking other 3 child threads
+- And help to `join()` back child threads
 
 **_Thread2_**:
 `keypress()` This thread will receive your input from key-board and help to decode the Pacman movement as _left()_, _right()_, _up()_ or _down()_.
@@ -82,11 +103,11 @@ _Note_: In case of C++, we have no support to receive inputs of arrow-keys from 
 
 **_Thread3_**:
 `game_controller()` This thread will monitor few operations:
-> Monitor _Ghost_ and _Pacman_ current position at a given time (Tx)
-> Updates `score` in score board
-> Update _Pacman_ life and reset its position to initial value if it touches _Ghosts_
-> Update `Map` if _Pacman_ eats cookie in his current position
-> And, `redraw()` the Map on `stdout()` for user to display
+- Monitor _Ghost_ and _Pacman_ current position at a given time (Tx)
+- Updates `score` in score board
+- Update _Pacman_ life and reset its position to initial value if it touches _Ghosts_
+- Update `Map` if _Pacman_ eats cookie in his current position
+- And, `redraw()` the Map on `stdout()` for user to display
 
 **_Thread4_**:
 `automove_ghosts()` This thread will help move 4 Ghosts one step at a time. These movements are time based operations and Ghosts can move either _left()_, _right()_, _up()_ or _down()_ at a given time, depending on their speed.
