@@ -14,12 +14,17 @@ namespace Action {
 				return false;
 			}
 		}
+		Position_t& operator=(const Position_t& o) {
+			posX = o.posX;
+			posY = o.posY;
+			return (*this);
+		}
 	};
 
 	// Warning: This class has to be Singleton class
 	class Game_Controller_t {
 		uint32_t score;
-		std::vector< std::vector<int> > Map;
+		std::vector< std::vector<char> > Map;
 	public:
 		void load_map(const vector<vector<int> >& vy);
 		void redraw_map(void);
@@ -31,6 +36,7 @@ namespace Action {
 		void refill_cookies(void);
 		bool has_cookie(const Position_t &atPos);
 		bool eat_cookie(const Position_t &atPos);
+		bool is_pos_valid(const Position_t &pos);
 	};
 
 	class Movement_t {
@@ -42,7 +48,7 @@ namespace Action {
 		bool move_up();
 		bool move_down();
 	private:
-		bool is_moveable();
+		bool is_moveable(Move_t m);
 	};
 
 }
